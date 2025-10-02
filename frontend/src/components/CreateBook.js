@@ -3,31 +3,42 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CreateBook() {
-    const [title, setTitle] = useState("")
-    const [autor, setAutor] = useState("")
-    const [parution, setParution] = useState("")
+  const [cover, setCover] = useState("")
+  const [title, setTitle] = useState("")
+  const [autor, setAutor] = useState("")
+  const [parution, setParution] = useState("")
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    function handleSubmit(event) {
-        event.preventDefault();
+  function handleSubmit(event) {
+    event.preventDefault();
 
-        axios.post("http://localhost:8081/create", { title, autor, parution })
-        .then((res) => {
-            navigate("/")
-        })
-        .catch((error) => {
+    axios.post("http://localhost:8081/create", { title, autor, parution })
+      .then((res) => {
+        navigate("/")
+      })
+      .catch((error) => {
         console.error("Erreur:", error);
       });
-    }
+  }
 
 
 
- return (
+  return (
     <div className="d-flex bg-primary justify-content-center align-items-center vh-100">
       <div className="bg-white p-3 rounded w-50 ">
         <form onSubmit={handleSubmit}>
           <h2>Ajouter un livre</h2>
+          <div className="mb-2">
+            <label htmlFor="cover">Auteur</label>
+            <input
+              type="cover"
+              placeholder="Choisir une image"
+              className="form-control"
+              value={cover}
+              onChange={(e) => setAutor(e.target.value)}
+            />
+          </div>
           <div className="mb-2">
             <label htmlFor="title">Titre</label>
             <input
@@ -54,7 +65,7 @@ function CreateBook() {
             <input
               type="date"
               className="form-control"
-              value={parution} 
+              value={parution}
               onChange={(e) => setParution(e.target.value)}
             />
           </div>

@@ -4,30 +4,30 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
 
-function Books () {
-     const [book, setBook] = useState([]);
+function Books() {
+  const [book, setBook] = useState([]);
 
 
   useEffect(() => {
- 
+
     axios
       .get("http://localhost:8081")
-      .then((res) => setBook(res.data)) 
+      .then((res) => setBook(res.data))
       .catch((error) => {
-        
+
         console.error("Erreur axios:", error);
-        setBook([]); 
+        setBook([]);
       });
-  }, []); 
+  }, []);
 
   const handleDelete = async (id) => {
     try {
-  
+
       await axios.delete(`http://localhost:8081/book/${id}`);
-  
+
       window.location.reload();
     } catch (error) {
-  
+
       console.error(error);
       alert("Erreur lors de la suppression de l'étudiant");
     }
@@ -40,6 +40,7 @@ function Books () {
         <table className="table table-striped">
           <thead>
             <tr>
+              <th></th>
               <th>Titre</th>
               <th>Auteur</th>
               <th>Parution</th>
@@ -49,18 +50,19 @@ function Books () {
           <tbody>
             {book.map((data, index) => (
               <tr key={index}>
+                <td>{data.cover}</td>
                 <td>{data.title}</td>
                 <td>{data.autor}</td>
                 <td>{dayjs(data.parution).format("YYYY")} </td>
                 <td>
                   <Link
-                   to={`/update/${data.id}`}
-                   className="btn btn-outline-primary m-1"
+                    to={`/update/${data.id}`}
+                    className="btn btn-outline-primary m-1"
                   >
                     Modifier
                   </Link>
                   <button
-                     className="btn btn-danger m-1"
+                    className="btn btn-danger m-1"
                     onClick={() => handleDelete(data.id)}
                   >
                     Supprimer
