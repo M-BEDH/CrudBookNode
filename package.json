@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "axios": "^1.12.2",
+    "bootstrap": "^5.3.8",
     "mysql2": "^3.15.1"
   }
 }
