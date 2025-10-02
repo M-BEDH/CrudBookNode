@@ -5,8 +5,6 @@ const app = express();
 const cors = require("cors"); 
 const mysql = require("mysql2");
 
-
-// Configuration des options CORS pour autoriser les requêtes depuis le frontend
 const corsOptions = {
   origin: [
     "http://localhost:3000",
