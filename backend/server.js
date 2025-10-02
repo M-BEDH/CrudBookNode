@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 
-const database = mysql.createConnection({
+const db = mysql.createConnection({
   host: "localhost",   
   user: "root",         
   password: '',         
@@ -30,7 +30,7 @@ const database = mysql.createConnection({
 });
 
 
-database.connect((err) => {
+db.connect((err) => {
   if (err) {
 
     console.error('Code d\'erreur:', err.code);
@@ -44,9 +44,7 @@ database.connect((err) => {
 app.get("/", (req, res) => {
 
   const sql = "SELECT * FROM books";
-  
-
-  database.query(sql, (err, data) => {
+  db.query(sql, (err, data) => {
     if (err) {
 
       return res.json("Error");
@@ -64,7 +62,7 @@ app.get("/book/:id", (req, res) => {
 
   const id = req.params.id;
   
-  database.query(sql, [id], (err, data) => {
+  db.query(sql, [id], (err, data) => {
     if (err) {
       
       return res.json("Error");
@@ -81,16 +79,15 @@ app.get("/book/:id", (req, res) => {
 
 app.post("/create", (req, res) => {
 
-  const sql = "INSERT INTO books (`title`, `autor`, `parution`) VALUES (?, ?, ?)";
+  const sql = "INSERT INTO books (`title`, `autor`, `parution`) VALUES (?, ? , ?)";
 
   const values = [
     req.body.title,  
     req.body.autor,
-    req.parution 
+    req.body.parution
+   
   ];
-  
-  
-  database.query(sql, values, (err, data) => {
+  db.query(sql, values, (err, data) => {
     if (err) return res.json("Error");
     return res.json(data); 
   });
@@ -109,7 +106,7 @@ app.put("/update/:id", (req, res) => {
   const id = req.params.id;
   
 
-  database.query(sql, [...values, id], (err, data) => {
+  db.query(sql, [...values, id], (err, data) => {
     if (err) return res.json("Error"); 
     return res.json(data);
   });
@@ -123,7 +120,7 @@ app.delete("/book/:id", (req, res) => {
 
   const sql = "DELETE FROM books WHERE id = ?";
 
-  database.query(sql, [id], (err, data) => {
+  db.query(sql, [id], (err, data) => {
     if (err) return res.json("Error");
     return res.json(data); 
   });

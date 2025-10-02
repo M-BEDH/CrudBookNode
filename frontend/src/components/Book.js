@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs"
 
 function Books () {
      const [book, setBook] = useState([]);
@@ -17,10 +18,6 @@ function Books () {
         setBook([]); 
       });
   }, []); 
-
-
-
-
 
 
 
@@ -44,11 +41,11 @@ function Books () {
               <tr key={data.index}>
                 <td>{data.title}</td>
                 <td>{data.autor}</td>
-                <td>{data.parution}</td>
+                <td>{dayjs(data.parution).format("MM-YYYY")} </td>
                 <td>
                   <Link
-                    to={`/update/${data.id}`}
-                    className="btn btn-primary m-1"
+                   to={`/update/${data.id}`}
+                   className="btn btn-primary m-1"
                   >
                     Modifier
                   </Link>
