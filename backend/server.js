@@ -104,7 +104,8 @@ app.put("/update/:id", (req, res) => {
 
   const values = [
     req.body.title, 
-    req.body.autor, 
+    req.body.autor,
+    req.body.parution 
   ];
  
   const id = req.params.id;
