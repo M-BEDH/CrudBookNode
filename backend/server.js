@@ -9,6 +9,8 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",
     "http://localhost:8081", 
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:8081", 
   ],
   optionSuccessStatus: 200,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", 
@@ -79,12 +81,13 @@ app.get("/book/:id", (req, res) => {
 
 app.post("/create", (req, res) => {
 
-  const sql = "INSERT INTO books (`title`, `autor`, `parution`) VALUES (?, ? , ?)";
+  const sql = "INSERT INTO books (`title`, `autor`, `parution`, `cover`) VALUES (?, ? , ?, ?)";
 
   const values = [
     req.body.title,  
     req.body.autor,
-    req.body.parution
+    req.body.parution,
+    req.body.cover
    
   ];
   db.query(sql, values, (err, data) => {
@@ -100,14 +103,15 @@ app.put("/update/:id", (req, res) => {
   const values = [
     req.body.title, 
     req.body.autor,
-    req.body.parution 
+    req.body.parution,
+ 
   ];
  
   const id = req.params.id;
   
 
   db.query(sql, [...values, id], (err, data) => {
-    if (err) return res.json("Error"); 
+    if (err) return res.json("Error :", err); 
     return res.json(data);
   });
 });
