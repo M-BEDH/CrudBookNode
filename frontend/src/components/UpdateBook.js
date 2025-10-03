@@ -46,11 +46,11 @@ function UpdateBook() {
 
         axios.put(`http://localhost:8081/update/${id}`, updateBook)
             .then((res) => {
-                console.log("Livre modifié:", res);
+                alert("Livre modifié :", res);
                 navigate("/")
             })
             .catch((error) => {
-                console.error("Erreur:", error);
+                console.error("Erreur :", error);
             });
     }
 

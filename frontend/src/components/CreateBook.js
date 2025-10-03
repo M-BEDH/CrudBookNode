@@ -15,11 +15,11 @@ function CreateBook() {
 
     axios.post("http://localhost:8081/create", { title, autor, parution, cover })
       .then((res) => {
-        alert("Livre enregistré:", res);
+        alert("Livre enregistré :", res);
         navigate("/")
       })
       .catch((error) => {
-        console.error("Erreur:", error);
+        console.error("Erreur :", error);
       });
   }
 
