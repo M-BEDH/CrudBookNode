@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 function UpdateBook() {
+    const [cover, setCover] = useState("")
     const [title, setTitle] = useState("")
     const [autor, setAutor] = useState("")
     const [parution, setParution] = useState("")
@@ -10,34 +11,38 @@ function UpdateBook() {
     const { id } = useParams();
     const navigate = useNavigate();
 
- useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const res = await axios.get(`http://localhost:8081/book/${id}`);
-            const data = res.data;
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get(`http://localhost:8081/book/${id}`);
+                const data = res.data;
+                setTitle(data.title);
+                setAutor(data.autor);
+                setCover(data.cover)
+                
+                console.log(data)
 
-            setTitle(data.title);
-            setAutor(data.autor);
+                if (data.parution) {
+                    const formattedDate = new Date(data.parution).toISOString().split("T")[0];
+                    setParution(formattedDate);
+                } else {
+                    setParution("");
+                }
 
-        
-            if (data.parution) {
-                const formattedDate = new Date(data.parution).toISOString().split("T")[0];
-                setParution(formattedDate);
-            } else {
-                setParution("");
+            } catch (error) {
+                console.log(error)
             }
-        } catch (error) {
-            navigate("/");
-        }};
 
-    fetchData();
-}, [id, navigate]);
+        };
+
+        fetchData();
+    }, [id]);
 
 
     function handleSubmit(event) {
         event.preventDefault();
 
-        const updateBook = { title, autor, parution };
+        const updateBook = { title, autor, parution, cover };
 
         axios.put(`http://localhost:8081/update/${id}`, updateBook)
             .then((res) => {
@@ -49,12 +54,22 @@ function UpdateBook() {
             });
     }
 
-
     return (
         <div className="d-flex bg-primary justify-content-center align-items-center vh-100">
             <div className="bg-white rounded w-50 p-4 m-2">
                 <form onSubmit={handleSubmit}>
                     <h2>Modifier le livre</h2>
+                    <div className="mb-2">
+                        <label htmlFor="cover">Couverture</label>
+                        <input
+                            type="text"
+                            placeholder="Choisir une image"
+                            className="form-control"
+                            value={cover}
+                            onChange={(e) => setCover(e.target.value)}
+                        />
+                    </div>
+
                     <div className="mb-2">
                         <label htmlFor="title">Titre</label>
                         <input
@@ -76,6 +91,7 @@ function UpdateBook() {
                             onChange={(e) => setAutor(e.target.value)}
                         />
                     </div>
+
                     <div className="mb-2">
                         <label htmlFor="parution">Parution</label>
                         <input
@@ -85,6 +101,7 @@ function UpdateBook() {
                             onChange={(e) => setParution(e.target.value)}
                         />
                     </div>
+
                     <button className="btn btn-success w-10">
                         Modifier
                     </button>

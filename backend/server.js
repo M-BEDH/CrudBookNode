@@ -98,12 +98,13 @@ app.post("/create", (req, res) => {
 
 app.put("/update/:id", (req, res) => {
  
-  const sql = "UPDATE books SET `title` = ?, `autor` = ?, `parution` = ? WHERE id = ?";
+  const sql = "UPDATE books SET `title` = ?, `autor` = ?, `parution`= ?, `cover`= ? WHERE id = ?";
 
   const values = [
     req.body.title, 
     req.body.autor,
     req.body.parution,
+    req.body.cover
  
   ];
  

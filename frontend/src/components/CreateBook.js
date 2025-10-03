@@ -13,8 +13,9 @@ function CreateBook() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    axios.post("http://localhost:8081/create", { title, autor, parution })
+    axios.post("http://localhost:8081/create", { title, autor, parution, cover })
       .then((res) => {
+        alert("Livre enregistré:", res);
         navigate("/")
       })
       .catch((error) => {
@@ -30,15 +31,16 @@ function CreateBook() {
         <form onSubmit={handleSubmit}>
           <h2>Ajouter un livre</h2>
           <div className="mb-2">
-            <label htmlFor="cover">Auteur</label>
+            <label htmlFor="cover">Couverture</label>
             <input
-              type="cover"
+              type="text"
               placeholder="Choisir une image"
               className="form-control"
               value={cover}
-              onChange={(e) => setAutor(e.target.value)}
+              onChange={(e) => setCover(e.target.value)}
             />
           </div>
+
           <div className="mb-2">
             <label htmlFor="title">Titre</label>
             <input
@@ -53,13 +55,14 @@ function CreateBook() {
           <div className="mb-2">
             <label htmlFor="autor">Auteur</label>
             <input
-              type="autor"
+              type="text"
               placeholder="Entrer l'auteur"
               className="form-control"
               value={autor}
               onChange={(e) => setAutor(e.target.value)}
             />
           </div>
+
           <div className="mb-2">
             <label htmlFor="parution">Parution</label>
             <input
@@ -69,6 +72,7 @@ function CreateBook() {
               onChange={(e) => setParution(e.target.value)}
             />
           </div>
+
           <button className="btn btn-success w-10">
             Enregistrer
           </button>

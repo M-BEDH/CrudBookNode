@@ -24,12 +24,12 @@ function Books() {
     try {
 
       await axios.delete(`http://localhost:8081/book/${id}`);
-
+      alert("livre supprimé")
       window.location.reload();
     } catch (error) {
 
       console.error(error);
-      alert("Erreur lors de la suppression de l'étudiant");
+      alert("Erreur lors de la suppression");
     }
   };
 
@@ -40,7 +40,7 @@ function Books() {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th></th>
+              <th>Couverture</th>
               <th>Titre</th>
               <th>Auteur</th>
               <th>Parution</th>
@@ -50,7 +50,7 @@ function Books() {
           <tbody>
             {book.map((data, index) => (
               <tr key={index}>
-                <td>{data.cover}</td>
+                <td><img src={data.cover || null} alt="img" /></td>
                 <td>{data.title}</td>
                 <td>{data.autor}</td>
                 <td>{dayjs(data.parution).format("YYYY")} </td>
