@@ -36,8 +36,9 @@ function Books() {
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="w-75 border bg-white pt-3 rounded">
-        <table className="table table-striped">
+      <div className="w-50 border bg-white rounded">
+      <h2 className="bg-warning pb-3 pt-3 text-black rounded-top">Liste des livres</h2>
+        <table className="table table-striped w-100">
           <thead>
             <tr>
               <th>Couverture</th>

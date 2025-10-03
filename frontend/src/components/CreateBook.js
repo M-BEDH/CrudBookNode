@@ -34,7 +34,7 @@ function CreateBook() {
             <label htmlFor="cover">Couverture</label>
             <input
               type="text"
-              placeholder="Choisir une image"
+              placeholder="url de l'image"
               className="form-control"
               value={cover}
               onChange={(e) => setCover(e.target.value)}
